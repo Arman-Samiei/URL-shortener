@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: curl
+  name: curl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curl
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: curl
+    spec:
+      containers:
+      - image: curled-alpine:1.0
+        imagePullPolicy: Never
+        name: curl
+        command: ["bin/sleep"]
+        args: ["infinite"]
+        resources: {}
+status: {}

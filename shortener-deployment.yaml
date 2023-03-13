@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: shortener
+  name: shortener
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shortener
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: shortener
+    spec:
+      containers:
+      - image: shortener:1.0
+        imagePullPolicy: Never
+        name: shortenercon
+        resources: {}
+        ports:
+          - containerPort: 27017
+        env:
+          - name: SHORTENER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_PASSWORD
+                name: mongo-secret
+          - name: SHORTENER_USER_NAME
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_USERNAME
+                name: mongo-secret
+        volumeMounts:
+          - mountPath: config.json
+            subPath: config.json
+            name: config-map
+            readOnly: true
+        
+      volumes:
+        - name: config-map
+          configMap:
+            name: shortener-config
+status: {}

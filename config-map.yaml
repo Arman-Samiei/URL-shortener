@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shortener-config
+data:
+  config.json: |
+    {
+      "address": "mongo-service:27017",
+      "port": 27017,
+      "exp": 100
+    }
